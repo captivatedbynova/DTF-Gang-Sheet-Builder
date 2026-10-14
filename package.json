@@ -38,7 +38,7 @@
   },
   "dependencies": {
     "file-saver": "^2.0.5",
-    "jszip": "^3.10.1",
+    "jszip": "^3.10.2",
     "konva": "^9.3.18",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
@@ -46,6 +46,6 @@
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^4.3.4",
-    "vite": "^6.0.5"
+    "vite": "^6.4.4"
   }
 }
