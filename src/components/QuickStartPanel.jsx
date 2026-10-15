@@ -1,28 +1,28 @@
 const STEPS = [
-  'PNG hochladen oder per Drag & Drop ablegen',
-  'Sheet-Vorlage wählen und Größe prüfen',
-  'Motive platzieren oder Auto Arrange nutzen',
-  'Warnungen, Preis und Verbrauch prüfen',
-  'PNG, ZIP oder Projektdatei exportieren',
+  'Upload your PNG designs or drag and drop them here',
+  'Choose your gang sheet size and check the dimensions',
+  'Arrange your designs manually or use Auto Arrange',
+  'Review image quality, pricing, and ink usage',
+  'Export your finished gang sheet as PNG or ZIP',
 ];
 
 const SHORTCUTS = [
-  ['Strg + Z', 'Undo'],
-  ['Strg + Y', 'Redo'],
-  ['Entf', 'Auswahl löschen'],
-  ['Strg/Shift + Klick', 'Mehrfachauswahl'],
-  ['Strg + V', 'PNG aus Zwischenablage einfügen'],
+  ['Ctrl + Z', 'Undo'],
+  ['Ctrl + Y', 'Redo'],
+  ['Delete', 'Delete selected design'],
+  ['Shift + Click', 'Select multiple designs'],
+  ['Ctrl + V', 'Paste PNG from clipboard'],
 ];
 
 export default function QuickStartPanel() {
   return (
     <section className="panel quickstart-panel">
-      <h2>Schnellstart</h2>
+      <h2>How to Get Started</h2>
       <ol className="compact-list">
         {STEPS.map((step) => <li key={step}>{step}</li>)}
       </ol>
       <details className="details-box">
-        <summary>Tastenkürzel anzeigen</summary>
+        <summary>Show Keyboard Shortcuts</summary>
         <dl className="shortcut-list">
           {SHORTCUTS.map(([keys, label]) => (
             <div key={keys}>
