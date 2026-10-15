@@ -819,8 +819,8 @@ export default function App() {
     <main className="app">
       <header className="app-header">
         <div>
-          <h1>DTF Gang Sheet Builder</h1>
-          <p>Lokaler PNG-Editor für transparente DTF-Sheets.</p>
+          <h1>Captivated By Nova x DTF Gang Sheet Builder</h1>
+          <p>Upload, arrange, and create your own custom DTF gang sheets with ease!</p>
         </div>
         <div className="header-actions">
           {status ? <span className="status">{status}</span> : null}
