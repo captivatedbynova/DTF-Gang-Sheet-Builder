@@ -19,19 +19,19 @@ export default function UploadPanel({
         onDrop={handleDrop}
       >
         <input type="file" accept="image/png" multiple onChange={onUpload} />
-        <span>PNG-Dateien auswählen oder hier ablegen</span>
+        <span>Upload PNG Designs or Drag & Drop Here</span>
       </label>
       <div className="button-row">
         <label className="button file-button">
-          Projekt laden
+          Load Saved Project
           <input type="file" accept="application/json,.json" onChange={onLoadProject} />
         </label>
         <button className="button secondary" type="button" onClick={onRestoreAutosave}>
-          Autosave laden
+          Restore Saved Project
         </button>
       </div>
       <button className="button secondary full" type="button" onClick={onClearAutosave}>
-        Autosave löschen
+        Clear Saved Project
       </button>
     </section>
   );
