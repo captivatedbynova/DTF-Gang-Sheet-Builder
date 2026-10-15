@@ -78,7 +78,7 @@ jobs:
           git push
 
       - name: Upload showcase assets
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: README-showcase
           path: |
