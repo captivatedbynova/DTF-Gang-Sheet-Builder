@@ -1,39 +1,98 @@
-export default function MultiSelectPanel({ selectedCount, onCommand, canUndo, canRedo, onUndo, onRedo }) {
+
+export default function MultiSelectPanel({
+  selectedCount,
+  onCommand,
+  onUndo,
+  onRedo,
+}) {
   return (
     <section className="panel">
-      <h2>Mehrfachauswahl</h2>
-      <p className="meta">{selectedCount} Motiv(e) ausgewählt.</p>
+      <h2>Multiple Design Selection</h2>
+
+      <p className="meta">
+        {selectedCount} design(s) selected.
+      </p>
+
       <div className="button-row compact-buttons">
-        <button className="button secondary" type="button" onClick={() => onCommand('align-left')} disabled={selectedCount < 2}>
-          Links
+        <button
+          className="button secondary"
+          type="button"
+          onClick={() => onCommand("left")}
+        >
+          Align Left
         </button>
-        <button className="button secondary" type="button" onClick={() => onCommand('align-right')} disabled={selectedCount < 2}>
-          Rechts
+
+        <button
+          className="button secondary"
+          type="button"
+          onClick={() => onCommand("right")}
+        >
+          Align Right
         </button>
-        <button className="button secondary" type="button" onClick={() => onCommand('align-top')} disabled={selectedCount < 2}>
-          Oben
+
+        <button
+          className="button secondary"
+          type="button"
+          onClick={() => onCommand("top")}
+        >
+          Align Top
         </button>
-        <button className="button secondary" type="button" onClick={() => onCommand('align-bottom')} disabled={selectedCount < 2}>
-          Unten
+
+        <button
+          className="button secondary"
+          type="button"
+          onClick={() => onCommand("bottom")}
+        >
+          Align Bottom
         </button>
-        <button className="button secondary" type="button" onClick={() => onCommand('distribute-x')} disabled={selectedCount < 3}>
-          H verteilen
+
+        <button
+          className="button secondary"
+          type="button"
+          onClick={() => onCommand("distribute-h")}
+        >
+          Distribute Horizontally
         </button>
-        <button className="button secondary" type="button" onClick={() => onCommand('distribute-y')} disabled={selectedCount < 3}>
-          V verteilen
+
+        <button
+          className="button secondary"
+          type="button"
+          onClick={() => onCommand("distribute-v")}
+        >
+          Distribute Vertically
         </button>
-        <button className="button secondary" type="button" onClick={() => onCommand('same-width')} disabled={selectedCount < 2}>
-          Gleiche Breite
+
+        <button
+          className="button secondary"
+          type="button"
+          onClick={() => onCommand("equal-width")}
+        >
+          Match Width
         </button>
-        <button className="button secondary" type="button" onClick={() => onCommand('same-height')} disabled={selectedCount < 2}>
-          Gleiche Höhe
+
+        <button
+          className="button secondary"
+          type="button"
+          onClick={() => onCommand("equal-height")}
+        >
+          Match Height
         </button>
       </div>
+
       <div className="button-row history-buttons">
-        <button className="button secondary" type="button" onClick={onUndo} disabled={!canUndo}>
+        <button
+          className="button secondary"
+          type="button"
+          onClick={onUndo}
+        >
           Undo
         </button>
-        <button className="button secondary" type="button" onClick={onRedo} disabled={!canRedo}>
+
+        <button
+          className="button secondary"
+          type="button"
+          onClick={onRedo}
+        >
           Redo
         </button>
       </div>
