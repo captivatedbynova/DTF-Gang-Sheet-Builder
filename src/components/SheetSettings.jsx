@@ -1,27 +1,39 @@
+
 export default function SheetSettings({ settings, sheetPixels, onChange }) {
   return (
     <section className="panel">
       <h2>Sheet Settings</h2>
+
       <label className="field">
-        <span>Breite cm</span>
+        <span>Sheet Width (inches)</span>
         <input
           type="number"
           min="1"
-          step="0.1"
-          value={settings.widthCm}
-          onChange={(event) => onChange({ widthCm: Number(event.target.value) })}
+          step="0.01"
+          value={Number((settings.widthCm / 2.54).toFixed(2))}
+          onChange={(event) =>
+            onChange({
+              widthCm: Number(event.target.value) * 2.54,
+            })
+          }
         />
       </label>
+
       <label className="field">
-        <span>Höhe cm</span>
+        <span>Sheet Length (inches)</span>
         <input
           type="number"
           min="1"
-          step="0.1"
-          value={settings.heightCm}
-          onChange={(event) => onChange({ heightCm: Number(event.target.value) })}
+          step="0.01"
+          value={Number((settings.heightCm / 2.54).toFixed(2))}
+          onChange={(event) =>
+            onChange({
+              heightCm: Number(event.target.value) * 2.54,
+            })
+          }
         />
       </label>
+
       <label className="field">
         <span>DPI</span>
         <input
@@ -29,11 +41,16 @@ export default function SheetSettings({ settings, sheetPixels, onChange }) {
           min="72"
           step="1"
           value={settings.dpi}
-          onChange={(event) => onChange({ dpi: Number(event.target.value) })}
+          onChange={(event) =>
+            onChange({
+              dpi: Number(event.target.value),
+            })
+          }
         />
       </label>
+
       <p className="meta">
-        Exportgröße: {sheetPixels.widthPx} x {sheetPixels.heightPx} px
+        Export Size: {sheetPixels.widthPx} x {sheetPixels.heightPx} px
       </p>
     </section>
   );
