@@ -13,7 +13,7 @@ export default function Toolbar({
   return (
     <div className="toolbar">
       <label className="field field-inline">
-        <span>Abstand mm</span>
+        <span>Design Spacing (mm)</span>
         <input
           type="number"
           min="0"
@@ -31,7 +31,7 @@ export default function Toolbar({
           checked={allowRotation}
           onChange={(event) => onAllowRotationChange(event.target.checked)}
         />
-        <span>Rotation erlauben</span>
+        <span>Allow Rotation</span>
       </label>
       <label className="toggle-line">
         <input
@@ -39,7 +39,7 @@ export default function Toolbar({
           checked={sortBySize}
           onChange={(event) => onSortBySizeChange(event.target.checked)}
         />
-        <span>Nach Größe sortieren</span>
+        <span>Sort by Design Size</span>
       </label>
       <label className="toggle-line">
         <input
@@ -47,7 +47,7 @@ export default function Toolbar({
           checked={guideSettings.showGapLines}
           onChange={(event) => onGuideSettingsChange({ showGapLines: event.target.checked })}
         />
-        <span>Abstandslinien</span>
+        <span>Show Spacing Guides</span>
       </label>
       <label className="toggle-line">
         <input
@@ -55,7 +55,7 @@ export default function Toolbar({
           checked={guideSettings.showCutLines}
           onChange={(event) => onGuideSettingsChange({ showCutLines: event.target.checked })}
         />
-        <span>Schneidelinien</span>
+        <span>Show Cutting Lines</span>
       </label>
       {warning ? <span className="warning">{warning}</span> : null}
     </div>
