@@ -312,6 +312,63 @@ export default function App() {
     changeItem(selectedId, patch);
   };
 
+  const updateGroupSizeInches = (
+    groupKey,
+    dimension,
+    inches,
+    keepProportions
+  ) => {
+    if (!Number.isFinite(inches) || inches <= 0) return;
+    if (inches > 400) return;
+
+    applyItemsChange((current) =>
+      current.map((item) => {
+        if (
+          item.groupKey !== groupKey ||
+          item.sheetId !== activeSheetId
+        ) {
+          return item;
+        }
+
+        const desiredPixels = cmToPx(
+          inches * 2.54,
+          activeSheet.dpi
+        );
+
+        if (dimension === "width") {
+          const newScaleX = Math.max(
+            0.01,
+            desiredPixels / item.width
+          );
+
+          return {
+            ...item,
+            scaleX: newScaleX,
+            scaleY: keepProportions
+  ? item.scaleY * (newScaleX / item.scaleX)
+  : item.scaleY,
+          };
+        }
+
+        if (dimension === "height") {
+          const newScaleY = Math.max(
+            0.01,
+            desiredPixels / item.height
+          );
+
+          return {
+            ...item,
+            scaleX: keepProportions
+  ? item.scaleX * (newScaleY / item.scaleY)
+  : item.scaleX,
+            scaleY: newScaleY,
+          };
+        }
+
+        return item;
+      })
+    );
+  };
   const updateSelectedSizeCm = (patch) => {
     if (!selectedItem) return;
     const nextPatch = {};
@@ -829,107 +886,115 @@ export default function App() {
         </div>
       </header>
 
-      <div className="workspace">
-        <aside className="side-column">
-          <UploadPanel
-            onUpload={handleUpload}
-            onDropFiles={addImageItems}
-            onLoadProject={loadProject}
-            onRestoreAutosave={restoreAutosave}
-            onClearAutosave={removeAutosave}
-          />
-          <QuickStartPanel />
-          <TemplateSelector value={sheetTemplate} onChange={applyTemplate} />
-          <SheetSettings settings={activeSheet} sheetPixels={sheet} onChange={updateActiveSheet} />
-          <ExportSafetyPanel stats={exportStats} />
-          <PlacementWarnings
-            result={placementResult}
-            highlightIssues={highlightIssues}
-            onHighlightIssuesChange={setHighlightIssues}
-          />
-        </aside>
+      
+<div className="workspace">
+  <aside className="side-column">
+    <UploadPanel
+      onUpload={handleUpload}
+      onDropFiles={addImageItems}
+      onLoadProject={loadProject}
+      onRestoreAutosave={restoreAutosave}
+      onClearAutosave={removeAutosave}
+    />
 
-        <section className="editor-column">
-          {sheets.length > 0 && (
-            <SheetTabs
-              sheets={sheets}
-              activeId={activeSheetId}
-              onSelect={setActiveSheetId}
-              onAdd={addSheet}
-              onDelete={deleteSheet}
-              onRename={renameSheet}
-            />
-          )}
-          <Toolbar
-            gapMm={gapMm}
-            onGapChange={setGapMm}
-            onArrange={arrangeItems}
-            warning={arrangeWarning}
-            allowRotation={allowPackingRotation}
-            onAllowRotationChange={setAllowPackingRotation}
-            sortBySize={sortPackingBySize}
-            onSortBySizeChange={setSortPackingBySize}
-            guideSettings={guideSettings}
-            onGuideSettingsChange={updateGuideSettings}
-          />
-          <CanvasEditor
-            items={sheetItems}
-            images={images}
-            selectedIds={selectedIds}
-            sheet={sheet}
-            onSelect={selectItem}
-            onChangeItem={changeItem}
-            onChangeItems={changeItems}
-            onBeginInteraction={() => pushHistory(items)}
-            stageRef={stageRef}
-            guideSettings={guideSettings}
-            gapMm={gapMm}
-            issueMap={placementResult.itemIssueMap}
-            highlightIssues={highlightIssues}
-          />
-        </section>
+    <TemplateSelector
+      value={sheetTemplate}
+      onChange={applyTemplate}
+    />
 
-        <aside className="side-column">
-          <MotifList
-            groups={motifGroups}
-            sheetDpi={activeSheet.dpi}
-            selectedId={selectedId}
-            onSelect={(id) => selectItem(id)}
-            onDuplicate={duplicateItem}
-            onDelete={deleteItem}
-            onDeleteGroup={deleteGroup}
-            onQuantityChange={changeGroupQuantity}
-            onTrimGroup={trimGroup}
-          />
-          <MultiSelectPanel
-            selectedCount={selectedIds.length}
-            onCommand={runMultiSelectCommand}
-            canUndo={historyRef.current.length > 0 || historyVersion < 0}
-            canRedo={redoRef.current.length > 0}
-            onUndo={undo}
-            onRedo={redo}
-          />
-          <ExportPanel
-            selectedItem={selectedItem}
-            selectedSizeCm={selectedSizeCm}
-            aspectUnlocked={aspectUnlocked}
-            onAspectUnlockedChange={setAspectUnlocked}
-            onDelete={() => deleteItem()}
-            onDuplicate={() => duplicateItem()}
-            onUpdateSelected={updateSelected}
-            onUpdateSelectedSizeCm={updateSelectedSizeCm}
-            onExportPng={exportPng}
-            onExportAllPng={exportAllPng}
-            sheetsCount={sheets.length}
-            onExportZip={exportZip}
-            onSaveProject={saveProject}
-            guideSettings={guideSettings}
-            onGuideSettingsChange={updateGuideSettings}
-          />
-          {/* Internal calculators hidden from customers */}
-            
-        </aside>
-      </div>
+    <SheetSettings
+      settings={activeSheet}
+      sheetPixels={sheet}
+      onChange={updateActiveSheet}
+    />
+  </aside>
+
+  <section className="editor-column">
+    {sheets.length > 0 && (
+      <SheetTabs
+        sheets={sheets}
+        activeId={activeSheetId}
+        onSelect={setActiveSheetId}
+        onAdd={addSheet}
+        onDelete={deleteSheet}
+        onRename={renameSheet}
+      />
+    )}
+
+    <Toolbar
+      gapMm={gapMm}
+      onGapChange={setGapMm}
+      onArrange={arrangeItems}
+      warning={arrangeWarning}
+      allowRotation={allowPackingRotation}
+      onAllowRotationChange={setAllowPackingRotation}
+      sortBySize={sortPackingBySize}
+      onSortBySizeChange={setSortPackingBySize}
+      guideSettings={guideSettings}
+      onGuideSettingsChange={updateGuideSettings}
+    />
+
+    <CanvasEditor
+      items={sheetItems}
+      images={images}
+      selectedIds={selectedIds}
+      sheet={sheet}
+      onSelect={selectItem}
+      onChangeItem={changeItem}
+      onChangeItems={changeItems}
+      onBeginInteraction={() => pushHistory(items)}
+      stageRef={stageRef}
+      guideSettings={guideSettings}
+      gapMm={gapMm}
+      issueMap={placementResult.itemIssueMap}
+      highlightIssues={highlightIssues}
+    />
+
+    {/* UPLOADED DESIGNS BELOW THE CANVAS */}
+    <MotifList
+      groups={motifGroups}
+      sheetDpi={activeSheet.dpi}
+      selectedId={selectedId}
+      onSelect={(id) => selectItem(id)}
+      onDuplicate={duplicateItem}
+      onDelete={deleteItem}
+      onDeleteGroup={deleteGroup}
+      onQuantityChange={changeGroupQuantity}
+      onTrimGroup={trimGroup}
+      onSizeChange={updateGroupSizeInches}
+    />
+
+    {/* ALIGNMENT AND MULTIPLE SELECTION */}
+    <MultiSelectPanel
+      selectedCount={selectedIds.length}
+      onCommand={runMultiSelectCommand}
+      canUndo={historyRef.current.length > 0 || historyVersion < 0}
+      canRedo={redoRef.current.length > 0}
+      onUndo={undo}
+      onRedo={redo}
+    />
+
+    {/* DESIGN SIZING, DOWNLOADS AND ORDERING */}
+    <ExportPanel
+      selectedItem={selectedItem}
+      selectedSizeCm={selectedSizeCm}
+      aspectUnlocked={aspectUnlocked}
+      onAspectUnlockedChange={setAspectUnlocked}
+      onDelete={() => deleteItem()}
+      onDuplicate={() => duplicateItem()}
+      onUpdateSelected={updateSelected}
+      onUpdateSelectedSizeCm={updateSelectedSizeCm}
+      onExportPng={exportPng}
+      onExportAllPng={exportAllPng}
+      sheetsCount={sheets.length}
+      onExportZip={exportZip}
+      onSaveProject={saveProject}
+      guideSettings={guideSettings}
+      onGuideSettingsChange={updateGuideSettings}
+    />
+  </section>
+</div>
+
     </main>
   );
 }

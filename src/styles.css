@@ -100,8 +100,8 @@ select {
 
 .workspace {
   display: grid;
-  grid-template-columns: minmax(240px, 290px) minmax(520px, 1fr) minmax(300px, 360px);
-  gap: 16px;
+  grid-template-columns: minmax(240px, 290px) minmax(0, 1fr);
+  gap: 20px;
   max-width: 1640px;
   margin: 0 auto;
   align-items: start;
@@ -111,6 +111,35 @@ select {
 .editor-column {
   display: grid;
   gap: 16px;
+  min-width: 0;
+}
+
+/* Full-width canvas and editing panels */
+
+.editor-column > * {
+  min-width: 0;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Uploaded designs sit beneath the canvas */
+
+.editor-column .motif-list {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Responsive layout for phones and tablets */
+
+@media (max-width: 900px) {
+  .workspace {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .side-column,
+  .editor-column {
+    width: 100%;
+  }
 }
 
 .panel,
@@ -575,14 +604,17 @@ select {
   background: #ffd9d6;
 }
 
+/* Responsive two-column layout */
+
 @media (max-width: 1180px) {
   .workspace {
-    grid-template-columns: 280px minmax(420px, 1fr);
+    grid-template-columns: minmax(220px, 280px) minmax(0, 1fr);
   }
+}
 
-  .workspace > .side-column:last-child {
-    grid-column: 1 / -1;
-    grid-template-columns: repeat(2, minmax(260px, 1fr));
+@media (max-width: 900px) {
+  .workspace {
+    grid-template-columns: minmax(0, 1fr);
   }
 }
 
