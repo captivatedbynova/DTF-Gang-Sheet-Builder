@@ -775,3 +775,22 @@ select {
   color: var(--text-secondary);
   padding-left: 4px;
 }
+
+/* Captivated By Nova background watermark */
+/* Visible on website only, not in PNG export */
+
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+
+  background-image: url("https://static.wixstatic.com/media/9cf045_48b1a4ca937b428bae8b831d64317998~mv2.png");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: min(45vw, 550px) auto;
+
+  opacity: 0.15;
+  pointer-events: none;
+  z-index: 9999;
+}
+
