@@ -61,15 +61,7 @@ export default function SheetTabs({ sheets, activeId, onSelect, onAdd, onDelete,
         ))}
       </div>
       <div className="sheet-tab-actions">
-        <select
-          id="add-sheet-template"
-          title="Sheet-Vorlage zum Hinzufügen"
-          defaultValue={TEMPLATES[0].id}
-        >
-          {TEMPLATES.filter((t) => t.id !== 'custom').map((t) => (
-            <option key={t.id} value={t.id}>{t.label}</option>
-          ))}
-        </select>
+        
         <button
           title="Neues Sheet hinzufügen"
           onClick={() => {
@@ -78,11 +70,10 @@ export default function SheetTabs({ sheets, activeId, onSelect, onAdd, onDelete,
           }}
         >
           + Sheet
-        </button>
-        {sheets.length > 1 && (
-          <span className="sheet-tab-count">{sheets.length} Sheets</span>
-        )}
-      </div>
-    </div>
-  );
-}
+        <button
+  type="button"
+  title="Add New Sheet"
+  onClick={() => onAdd(TEMPLATES[0].id)}
+>
+  + Sheet
+</button>
