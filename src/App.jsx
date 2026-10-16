@@ -545,9 +545,9 @@ export default function App() {
   const runExport = (callback) => {
     try {
       callback();
-      setStatus('Export erstellt.');
+      setStatus('Your gang sheet has been downloaded successfully!');
     } catch (error) {
-      setStatus(`Export fehlgeschlagen: ${error.message}`);
+      setStatus(`Export failed: ${error.message}`);
     }
   };
 
