@@ -1,23 +1,23 @@
 export default function ExportSafetyPanel({ stats }) {
   return (
     <section className="panel">
-      <h2>Export-Sicherheit</h2>
+      <h2>EExport Safety</h2>
       <dl className="result-list">
         <div>
-          <dt>Pixelgröße</dt>
+          <dt>Pixel Dimensions</dt>
           <dd>{stats.widthPx} x {stats.heightPx} px</dd>
         </div>
         <div>
-          <dt>Megapixel</dt>
+          <dt>Megapixels</dt>
           <dd>{stats.megapixels.toFixed(1)} MP</dd>
         </div>
         <div>
-          <dt>RAM geschätzt</dt>
+          <dt>Estimated Memory</dt>
           <dd>{stats.ramMb.toFixed(1)} MB</dd>
         </div>
       </dl>
       {stats.isLarge ? (
-        <p className="warning">Sehr großer Export: über 150 Megapixel. Der Browser kann dabei an Speichergrenzen kommen.</p>
+        <p className="warning">Large Export Warning: This gang sheet exceeds 150 megapixels. Exporting may require significant memory and could cause your browser to slow down or crash.</p>
       ) : null}
     </section>
   );
