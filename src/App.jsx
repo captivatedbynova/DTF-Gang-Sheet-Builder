@@ -756,7 +756,7 @@ export default function App() {
   }, []);
 
   const runMultiSelectCommand = (command) => {
-    window.alert(`Command: ${command}, Selected: ${selectedIds.length}`);
+    
     const selectedItems = items.filter((item) => selectedIds.includes(item.id));
     if (selectedItems.length < 2) return;
     const bounds = getBounds(selectedItems);
