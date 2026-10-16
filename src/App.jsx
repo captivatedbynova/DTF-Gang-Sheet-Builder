@@ -926,19 +926,8 @@ export default function App() {
             guideSettings={guideSettings}
             onGuideSettingsChange={updateGuideSettings}
           />
-          <PricingPanel
-            items={sheetItems}
-            groups={motifGroups}
-            sheet={activeSheet}
-            values={pricingValues}
-            onChange={(patch) => setPricingValues((current) => ({ ...current, ...patch }))}
-          />
-          <ConsumptionPanel
-            sheet={activeSheet}
-            items={sheetItems}
-            values={consumptionValues}
-            onChange={(patch) => setConsumptionValues((current) => ({ ...current, ...patch }))}
-          />
+          {/* Internal calculators hidden from customers */}
+            
         </aside>
       </div>
     </main>
