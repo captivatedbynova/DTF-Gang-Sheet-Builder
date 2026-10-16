@@ -62,18 +62,20 @@ export default function SheetTabs({ sheets, activeId, onSelect, onAdd, onDelete,
       </div>
       <div className="sheet-tab-actions">
         
-        <button
-          title="Neues Sheet hinzufügen"
-          onClick={() => {
-            const sel = document.getElementById('add-sheet-template');
-            onAdd(sel?.value || TEMPLATES[0].id);
-          }}
-        >
-          + Sheet
-        <button
+        
+<button
   type="button"
   title="Add New Sheet"
   onClick={() => onAdd(TEMPLATES[0].id)}
 >
   + Sheet
 </button>
+{ sheets.length > 1 && (
+  <span className="sheet-tab-count">
+    {sheets.length} Sheets
+  </span>
+)}
+</div>
+</div>
+);
+}
