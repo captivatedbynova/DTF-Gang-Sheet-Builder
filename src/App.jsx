@@ -229,7 +229,7 @@ export default function App() {
     const unsupported = fileList.filter((file) => file.type !== 'image/png');
     const pngFiles = fileList.filter((file) => file.type === 'image/png');
     if (pngFiles.length === 0) {
-      if (unsupported.length) setStatus('Nur PNG-Dateien werden unterstützt.');
+      if (unsupported.length) setStatus('Only PNG files are supported.');
       return;
     }
 
@@ -274,9 +274,9 @@ export default function App() {
     });
     applyItemsChange((current) => [...current, ...loaded.map(({ item }) => item)], false);
     setSelectedIds([loaded[loaded.length - 1].item.id]);
-    const messages = [`${loaded.length} PNG-Datei(en) geladen.`];
-    if (unsupported.length) messages.push(`${unsupported.length} Datei(en) übersprungen.`);
-    if (transparencyWarnings.length) messages.push(`Warnung: ${transparencyWarnings.join(', ')} hat keine Transparenz.`);
+    const messages = [`${loaded.length} PNG file(s) uploaded.`];
+    if (unsupported.length) messages.push(`${unsupported.length} file(s) skipped.`);
+    if (transparencyWarnings.length) messages.push(`Warnung: ${transparencyWarnings.join(', ')} does not have a transparent background.`);
     setStatus(messages.join(' '));
   }, []);
 
@@ -451,7 +451,7 @@ export default function App() {
     if (!group.length) return;
     const source = images.get(group[0].id);
     if (!source) {
-      setStatus('Bild konnte nicht geladen werden.');
+      setStatus('Image could not be loaded.');
       return;
     }
     try {
@@ -484,16 +484,16 @@ export default function App() {
         }),
       );
       setStatus(
-        `Transparenz getrimmt: ${trimmed.originalWidth}x${trimmed.originalHeight}px -> ${trimmed.width}x${trimmed.height}px`,
+        `Transparent edges trimmed: ${trimmed.originalWidth}x${trimmed.originalHeight}px -> ${trimmed.width}x${trimmed.height}px`,
       );
     } catch (error) {
-      setStatus(`Trim fehlgeschlagen: ${error.message}`);
+      setStatus(`Trimming failed: ${error.message}`);
     }
   };
 
   const arrangeItems = () => {
     if (!sheetItems.length) {
-      setArrangeWarning('Keine Motive auf dem aktuellen Sheet.');
+      setArrangeWarning('No designs on the current sheet.');
       return;
     }
 
@@ -508,7 +508,7 @@ export default function App() {
     if (pages.length <= 1) {
       const packedById = new Map(pages[0].items.map((item) => [item.id, { ...item, sheetId: activeSheetId }]));
       setItems((current) => current.map((item) => packedById.get(item.id) || item));
-      const utilization = `Auslastung: ${pages[0].beforeUtilization.toFixed(1)}% -> ${pages[0].afterUtilization.toFixed(1)}%.`;
+      const utilization = `Sheet space used: ${pages[0].beforeUtilization.toFixed(1)}% -> ${pages[0].afterUtilization.toFixed(1)}%.`;
       setArrangeWarning(utilization);
       return;
     }
@@ -539,7 +539,7 @@ export default function App() {
     const totalUtilization = pages
       .map((page, index) => `Sheet ${index + 1}: ${page.afterUtilization.toFixed(1)}%`)
       .join(', ');
-    setArrangeWarning(`Auf ${pages.length} Sheets verteilt. ${totalUtilization}.`);
+    setArrangeWarning(`Designs arranged across ${pages.length} sheets. ${totalUtilization}.`);
   };
 
   const runExport = (callback) => {
@@ -599,7 +599,7 @@ export default function App() {
 
     // Restore original active sheet
     setActiveSheetId(previousActiveSheetId);
-    setStatus(`${sheets.length} Sheets als PNG exportiert.`);
+    setStatus(`${sheets.length} sheets exported as PNG.`);
   };
 
   const makeProjectPayload = () =>
@@ -705,9 +705,9 @@ export default function App() {
         project: makeProjectPayload(),
         summary: sheets.length > 1 ? makeProjectSummary() : makeSummary(),
       });
-      setStatus(sheets.length > 1 ? `ZIP-Export mit ${sheets.length} Sheets erstellt.` : 'ZIP-Export erstellt.');
+      setStatus(sheets.length > 1 ? `ZIP export completed with ${sheets.length} sheets.` : 'ZIP export completed.');
     } catch (error) {
-      setStatus(`ZIP-Export fehlgeschlagen: ${error.message}`);
+      setStatus(`ZIP export failed: ${error.message}`);
     } finally {
       setActiveSheetId(previousActiveSheetId);
     }
@@ -761,9 +761,9 @@ export default function App() {
     try {
       const project = await readProjectFile(file);
       await applyProject(project);
-      setStatus('Projekt geladen.');
+      setStatus('Project loaded successfully.');
     } catch (error) {
-      setStatus(`Projekt konnte nicht geladen werden: ${error.message}`);
+      setStatus(`Project could not be loaded: ${error.message}`);
     } finally {
       event.target.value = '';
     }
@@ -773,22 +773,22 @@ export default function App() {
     try {
       const autosave = await loadAutosave();
       if (!autosave?.project) {
-        setStatus('Kein Autosave gefunden.');
+        setStatus('No saved project found.');
         return;
       }
       await applyProject(autosave.project);
-      setStatus(`Autosave wiederhergestellt (${new Date(autosave.savedAt).toLocaleString()}).`);
+      setStatus(`Saved project restored (${new Date(autosave.savedAt).toLocaleString()}).`);
     } catch (error) {
-      setStatus(`Autosave konnte nicht geladen werden: ${error.message}`);
+      setStatus(`Saved project could not be loaded: ${error.message}`);
     }
   };
 
   const removeAutosave = async () => {
     try {
       await clearAutosave();
-      setStatus('Autosave gelöscht.');
+      setStatus('Saved project deleted.');
     } catch (error) {
-      setStatus(`Autosave konnte nicht gelöscht werden: ${error.message}`);
+      setStatus(`Saved project could not be deleted: ${error.message}`);
     }
   };
 
@@ -867,7 +867,7 @@ export default function App() {
       try {
         await saveAutosave(makeProjectPayload());
       } catch (error) {
-        setStatus(`Autosave konnte nicht gespeichert werden: ${error.message}`);
+        setStatus(`Project could not be automatically saved: ${error.message}`);
       }
     }, 600);
     return () => window.clearTimeout(timeout);
