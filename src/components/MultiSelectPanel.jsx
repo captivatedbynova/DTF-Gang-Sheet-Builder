@@ -2,13 +2,14 @@
 export default function MultiSelectPanel({
   selectedCount,
   onCommand,
+  canUndo,
+  canRedo,
   onUndo,
   onRedo,
 }) {
   return (
     <section className="panel">
       <h2>Multiple Design Selection</h2>
-
       <p className="meta">
         {selectedCount} design(s) selected.
       </p>
@@ -17,7 +18,8 @@ export default function MultiSelectPanel({
         <button
           className="button secondary"
           type="button"
-          onClick={() => onCommand("left")}
+          onClick={() => onCommand("align-left")}
+          disabled={selectedCount < 2}
         >
           Align Left
         </button>
@@ -25,7 +27,8 @@ export default function MultiSelectPanel({
         <button
           className="button secondary"
           type="button"
-          onClick={() => onCommand("right")}
+          onClick={() => onCommand("align-right")}
+          disabled={selectedCount < 2}
         >
           Align Right
         </button>
@@ -33,7 +36,8 @@ export default function MultiSelectPanel({
         <button
           className="button secondary"
           type="button"
-          onClick={() => onCommand("top")}
+          onClick={() => onCommand("align-top")}
+          disabled={selectedCount < 2}
         >
           Align Top
         </button>
@@ -41,7 +45,8 @@ export default function MultiSelectPanel({
         <button
           className="button secondary"
           type="button"
-          onClick={() => onCommand("bottom")}
+          onClick={() => onCommand("align-bottom")}
+          disabled={selectedCount < 2}
         >
           Align Bottom
         </button>
@@ -49,7 +54,8 @@ export default function MultiSelectPanel({
         <button
           className="button secondary"
           type="button"
-          onClick={() => onCommand("distribute-h")}
+          onClick={() => onCommand("distribute-x")}
+          disabled={selectedCount < 3}
         >
           Distribute Horizontally
         </button>
@@ -57,7 +63,8 @@ export default function MultiSelectPanel({
         <button
           className="button secondary"
           type="button"
-          onClick={() => onCommand("distribute-v")}
+          onClick={() => onCommand("distribute-y")}
+          disabled={selectedCount < 3}
         >
           Distribute Vertically
         </button>
@@ -65,7 +72,8 @@ export default function MultiSelectPanel({
         <button
           className="button secondary"
           type="button"
-          onClick={() => onCommand("equal-width")}
+          onClick={() => onCommand("same-width")}
+          disabled={selectedCount < 2}
         >
           Match Width
         </button>
@@ -73,7 +81,8 @@ export default function MultiSelectPanel({
         <button
           className="button secondary"
           type="button"
-          onClick={() => onCommand("equal-height")}
+          onClick={() => onCommand("same-height")}
+          disabled={selectedCount < 2}
         >
           Match Height
         </button>
@@ -84,14 +93,15 @@ export default function MultiSelectPanel({
           className="button secondary"
           type="button"
           onClick={onUndo}
+          disabled={!canUndo}
         >
           Undo
         </button>
-
         <button
           className="button secondary"
           type="button"
           onClick={onRedo}
+          disabled={!canRedo}
         >
           Redo
         </button>
